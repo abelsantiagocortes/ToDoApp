@@ -1,54 +1,23 @@
 import React, { Component } from 'react';
-import ListTodo from './ListToDo';
-import AddToDo from './AddToDo';
-
+import NavBar from './components/NavBar.js'
+import {BrowserRouter, Route} from 'react-router-dom'
+import  Home from './components/Home'
+import About from './components/About';
+import AppToDo from './components/AppToDo.js';
 class App extends Component {
-
-  state = {
-    todos: [
-      { id: 1, content: " Buy Milk" },
-      { id: 2, content: "Finish Tutorials" }
-    ]
-  }
-
-  // Component Functions
-
-  markCompleted = (id) => {
-    let todos = this.state.todos.filter(todo =>{
-      if(todo.id ===id)
-      {
-        return false;
-      }
-      else {
-        return true;
-      }
-    });
-    this.setState({
-      todos: todos
-    });
-  }
-
-  addToDo = (todo) => {
-    todo.id = Math.random();
-    let todos = [...this.state.todos, todo];
-    this.setState({
-      todos: todos
-    });
-    console.log(todos);
-  }
 
   render() {
     return (
-    
-      <div className="todoApp container">
-
-      <h1 className="center blue-text">To Do List</h1>
-
-      <ListTodo todos={this.state.todos} mark = {this.markCompleted}></ListTodo>
-      <AddToDo addToDo={this.addToDo}></AddToDo>
-
-
-    </div>)
+        <BrowserRouter>
+            <div className="App">
+                <NavBar></NavBar>
+                <Route path ="/Home" component={Home}></Route>
+                <Route path ="/ListToDo" component={AppToDo}></Route>
+                <Route path ="/About" component={About}></Route>
+            </div>
+        </BrowserRouter>
+        
+    )
 
   }
 
