@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ListTodo from './ListToDo';
+import AddToDo from './AddToDo';
 
 class App extends Component {
 
@@ -26,6 +27,16 @@ class App extends Component {
       todos: todos
     });
   }
+
+  addToDo = (todo) => {
+    todo.id = Math.random();
+    let todos = [...this.state.todos, todo];
+    this.setState({
+      todos: todos
+    });
+    console.log(todos);
+  }
+
   render() {
     return (
     
@@ -34,6 +45,7 @@ class App extends Component {
       <h1 className="center blue-text">To Do List</h1>
 
       <ListTodo todos={this.state.todos} mark = {this.markCompleted}></ListTodo>
+      <AddToDo addToDo={this.addToDo}></AddToDo>
 
 
     </div>)
