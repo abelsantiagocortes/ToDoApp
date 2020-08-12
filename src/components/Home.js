@@ -1,14 +1,51 @@
-import React from 'react';
+import React, { Component } from 'react';
+import {Link} from 'react-router-dom'
+import axios from 'axios'
+class Home extends Component {
 
-const Home = ({ }) => {
+    state = {
+        posts: []
+    }
+
+    componentDidMount() {
+        axios.get('https://jsonplaceholder.typicode.com/posts').then(res => {
+            console.log(res)
+            this.setState(
+                {
+                    posts: res.data.slice(0,10)
+                }
+            )
+        })
+
+    }
 
 
-    return (
-        <div className="container">
-        <h4 className="center">Home</h4>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed asperiores, a mollitia, aut architecto consequatur aliquam, repudiandae adipisci suscipit expedita non tempore provident at. Expedita numquam doloribus necessitatibus saepe corrupti.</p>
-        </div>
-    )
+    render() {
+        const { posts } = this.state;
+        const postList = posts.length ? (
+            posts.map(post =>{
+                return <div className="post card" key ={post.id}>
+                <div className="card-content">
+                    <Link to ={'/Post/' + post.id}>
+                        <span className="card-title">{post.title}</span>
+                    </Link>
+                    
+                    <p>{post.body}</p>
+                </div>
+                </div>
+            })
+        ):
+        (
+                <div className = "center">No Data</div>
+        
+        )
+        return (
+            <div className="container">
+                <h4 className="center">Home</h4>
+                {postList}
+           </div>
+        )
+    }
 }
 
 export default Home;
